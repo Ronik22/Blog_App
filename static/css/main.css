@@ -1,0 +1,61 @@
+.rbnavshadow{
+    -webkit-box-shadow: 0 4px 10px -8px #999;
+    -moz-box-shadow: 0 4px 10px -8px #999;
+    box-shadow: 0 4px 10px -8px #999;
+    z-index:999;
+    background-color: #fff;
+}
+.rbnav_bar{
+    display: flex;
+    flex-direction: row;
+    padding: 0px 1rem;
+    height: 55px;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.rbnav_logo{
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(171, 25, 255);
+    flex: 1;
+    /* background-color: bisque; */
+}
+#rbnav_links{
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    list-style: none;
+    /* background-color: blue; */
+    transform: translateY(6px);
+}
+#rbnav_links li a{
+    font-size: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    cursor: pointer;
+    padding: 15px 10px 10px 10px;
+    text-align: center;
+    margin-left: 15px;
+    color:  rgb(29, 29, 29) ;
+    text-decoration: none;
+    /* background-color: rgb(255, 176, 96); */
+    
+}
+#rbnav_links li a:hover{
+    border-bottom: 3.5px solid  rgb(255, 17, 176);
+    color:  rgb(255, 17, 176);
+}
+.rbhamburger{
+    text-align: center;
+    color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    /* background-color: rgb(175, 116, 45); */
+    transform: translateY(-4px);
+}
+.rbhamburger span{
+    border-bottom: 2px solid white;
+    width: 25px;
+    padding: 4px;
+}
