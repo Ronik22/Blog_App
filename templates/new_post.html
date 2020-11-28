@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 
-{% block head %}
-<title>New Post</title>
+{% block title %}
+New Post
 {% endblock %}
 
-{% block body %}
+{% block content %}
 <h2 style="margin-top: 40px;">Create New Blog Post</h2>
     <hr style="margin-bottom: 40px;">
         
         <form action="/posts" method="POST">
             <div>Title: <input  class="form-control" type="text" name="title" id="title"></div>
-            <br>
-            <div>Author: <input  class="form-control" type="text" name="author" id="author"></div>
             <br>
             <div>Content: <textarea  class="form-control" type="text" name="content" id="content" rows="10"></textarea></div>
             <br>
