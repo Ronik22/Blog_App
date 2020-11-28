@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p>{{msg}}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form action="#" method="POST" class="form1">
+    <p>Hello, {{name}}</p>
+    <input type="email" name="email" placeholder="Enter Email" value="{{email if email}}"/>
+    <input type="datetime" name="datetime" placeholder="Enter Date and Time" value="{{datetime if datetime}}"/>
+    <input class="btn btn-success" type="submit" value="Submit">
+</form>
+<br><br>
+<a class="btn btn-danger" href="/logout">Logout</a>
+<a class="btn btn-warning" href="/posts">Posts</a>
+
+{% endblock %}
