@@ -2,11 +2,13 @@ from flask import Flask, redirect, url_for, render_template, request
 from flask import session, flash
 from datetime import timedelta, datetime
 from flask_sqlalchemy import SQLAlchemy
+import os
+import bcrypt
 
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
-app.secret_key = "hello"
+app.secret_key = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(minutes=30)
@@ -16,12 +18,14 @@ db = SQLAlchemy(app)
 class users(db.Model):
     _id = db.Column("id",db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    datetime = db.Column(db.String(100))
+    pwd = db.Column(db.String(100))
+    email = db.Column(db.String(100), default='N/A')
+    datetime = db.Column(db.String(100), default='N/A')
 
-    def __init__(self, name, email, datetime):
+    def __init__(self, name, email, datetime, pwd):
         self.name = name
         self.email = email
+        self.pwd = pwd
         self.datetime = datetime
 
 class BlogPost(db.Model):
@@ -111,15 +115,21 @@ def view():
 def login():
     if request.method == "POST":
         user = request.form["nm"]
+        pwd = request.form["pwd"]
 
         found_user = users.query.filter_by(name=user).first()
         if found_user:
-            session.permanent = True
-            session["user"] = user
-            session["email"] = found_user.email
-            session["datetime"] = found_user.datetime
-            flash("Login Successful!")
-            return redirect(url_for("user"))
+            if bcrypt.checkpw(pwd.encode('utf-8'),found_user.pwd) == True:
+                session.permanent = True
+                session["user"] = user
+                session["pwd"] = found_user.pwd
+                session["email"] = found_user.email
+                session["datetime"] = found_user.datetime
+                flash("Login Successful!")
+                return redirect(url_for("user"))
+            else:
+                flash("Password is wrong!")
+                return redirect(url_for("login"))
         else:
             flash("User Not Found!")
             return redirect(url_for("login"))
@@ -133,6 +143,8 @@ def login():
 def register():
     if request.method == "POST":
         user = request.form["nm"]
+        pwd = request.form["pwd"]
+        pwd = bcrypt.hashpw(pwd.encode('utf-8'), bcrypt.gensalt())
 
         found_user = users.query.filter_by(name=user).first()
         if found_user:
@@ -141,7 +153,7 @@ def register():
         else:
             session.permanent = True
             session["user"] = user
-            usr = users(user, "", "")
+            usr = users(user, "", "", pwd)
             db.session.add(usr)
             db.session.commit()
 
@@ -163,8 +175,6 @@ def user():
         if request.method == "POST":
             email = request.form["email"]
             datetime = request.form["datetime"]
-
-
 
             session["email"] = email
             session["datetime"] = datetime
