@@ -6,8 +6,27 @@
 
 {% block content %}
 
-    {% for item in values %}
-        <p>Name: {{item.name}}, Email: {{item.email}}, Date and Time: {{item.datetime}}</p>
-    {% endfor %}
-
+    <div class="container">
+        <table class="table table-bordered table-hover">
+                <thead>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date and Time</th>
+                </thead>
+                <tbody>
+                    {% for item in values %}
+                        <tr>
+                            <th scope="row">{{item._id}}</th>
+                            <td>{{item.name}}</td>
+                            <td>{{item.pwd}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.datetime}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+    </div>
+    
 {% endblock %}

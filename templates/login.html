@@ -9,14 +9,19 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for msg in messages %}
-            <p>{{msg}}</p>
+            <div class="alert alert-info alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{msg}}
+            </div>
         {% endfor %}
     {% endif %}
 {% endwith %}
 
 <form action="#" method="post" class="form1">
     <p>Name:</p>
-    <p><input type="text" name="nm"></p>
+    <p><input type="text" name="nm" placeholder="Enter your username..."></p>
+    <p>Password:</p>
+    <p><input type="password" name="pwd" placeholder="Enter your password..."></p>
     <p><input class="btn btn-success" type="submit" value="Submit"></p>
 </form>
 <a href="/register">Register Instead</a>
