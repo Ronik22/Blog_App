@@ -62,9 +62,13 @@ def posts():
 def delete(id):
     if "user" in session:
         post = BlogPost.query.get_or_404(id)
-        db.session.delete(post)
-        db.session.commit()
-        return redirect('/posts')
+        if post.author == session["user"]:
+            db.session.delete(post)
+            db.session.commit()
+            return redirect('/posts')
+        else:
+            flash("Only the author can delete the post")
+            return redirect('/posts')
     else:
         flash("You are not logged in!")
         return redirect(url_for("login"))
@@ -74,14 +78,18 @@ def delete(id):
 def edit(id):
     if "user" in session:
         post = BlogPost.query.get_or_404(id)
-        if request.method == 'POST':
-            post.title = request.form['title']
-            post.author = session["user"]
-            post.content = request.form['content']
-            db.session.commit()     
-            return redirect('/posts')
+        if post.author == session["user"]:
+            if request.method == 'POST':
+                post.title = request.form['title']
+                post.author = session["user"]
+                post.content = request.form['content']
+                db.session.commit()     
+                return redirect('/posts')
+            else:
+                return render_template('edit.html',post=post)
         else:
-            return render_template('edit.html',post=post)
+            flash("Only the author can edit the post")
+            return redirect('/posts')
     else:
         flash("You are not logged in!")
         return redirect(url_for("login"))
