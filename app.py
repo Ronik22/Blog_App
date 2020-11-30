@@ -62,7 +62,7 @@ def posts():
 def delete(id):
     if "user" in session:
         post = BlogPost.query.get_or_404(id)
-        if post.author == session["user"]:
+        if post.author == session["user"] or session["user"] == "admin":
             db.session.delete(post)
             db.session.commit()
             return redirect('/posts')
@@ -78,7 +78,7 @@ def delete(id):
 def edit(id):
     if "user" in session:
         post = BlogPost.query.get_or_404(id)
-        if post.author == session["user"]:
+        if post.author == session["user"] or session["user"] == "admin":
             if request.method == 'POST':
                 post.title = request.form['title']
                 post.author = session["user"]
@@ -115,9 +115,13 @@ def new_post():
 def home():
     return render_template("intro.html")
 
-@app.route("/view")
+@app.route("/view")     # username: admin, password: admin
 def view():
-    return render_template("view.html", values = users.query.all())
+    if  "user" in session and session["user"] == "admin":
+        return render_template("view.html", values = users.query.all())
+    else:
+        flash("You need administrator privileges to view this page")
+        return redirect(url_for("login"))
 
 @app.route("/login", methods=["POST","GET"])
 def login():
