@@ -9,19 +9,34 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for msg in messages %}
-            <p class="alert alert-info">{{msg}}</p>
+            <div class="alert alert-info alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{msg}}
+            </div>
         {% endfor %}
     {% endif %}
 {% endwith %}
 
 <form action="#" method="POST" class="form1">
-    <p>Hello, {{name}}</p>
-    <input type="email" name="email" placeholder="Enter Email" value="{{email if email}}"/>
-    <input type="datetime" name="datetime" placeholder="Enter Date and Time" value="{{datetime if datetime}}"/>
-    <input class="btn btn-success" type="submit" value="Submit">
+    <div>
+        <h2 style="display: inline;">Hello, {{name}}</h2>
+        <a style="display: inline; width: 80px; margin-left: 15px;" class="btn btn-danger float-right" href="/logout">Logout</a>
+        <a style="display: inline; width: 80px; margin-left: 15px;" class="btn btn-warning float-right" href="/posts">Posts</a>
+    </div>
+    <hr><br>
+    <div class="form-group">
+        <label>Email address</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter Email" value="{{email if email}}"/>
+    </div>
+    <div class="form-group">
+        <label>Date and Time</label>
+        <input class="form-control" type="datetime" name="datetime" placeholder="Enter Date and Time" value="{{datetime if datetime}}"/>
+    </div>
+    <input class="btn btn-success" type="submit" value="Submit" style="margin-top: 20px;">
 </form>
+
+
 <br><br>
-<a class="btn btn-danger" href="/logout">Logout</a>
-<a class="btn btn-warning" href="/posts">Posts</a>
+
 
 {% endblock %}

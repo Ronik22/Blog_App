@@ -6,6 +6,17 @@ Posts
 
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-info alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{msg}}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <div style="margin-bottom: 20px; margin-top: 40px;">
     <h2 style="display: inline;">All Posts :</h2> 
     <a style="display: inline; width: 120px;" href="/posts/new" class="btn btn-primary float-right" role="button">+ New Post</a>
