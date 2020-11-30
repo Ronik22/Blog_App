@@ -35,8 +35,10 @@ Posts
 
         <br><br>
         <p style="white-space: pre-wrap; word-wrap: break-word;">{{post.content}}</p>
-        <a class="btn btn-danger" href="/posts/delete/{{post.id}}">Delete</a>
-        <a class="btn btn-warning" href="/posts/edit/{{post.id}}">Edit</a>
+        {% if post.author == session["user"] or session["user"] == "admin" %}
+            <a class="btn btn-danger" href="/posts/delete/{{post.id}}">Delete</a>
+            <a class="btn btn-warning" href="/posts/edit/{{post.id}}">Edit</a>
+        {%endif%}
         <hr>
     {% endfor %}
     </div>
