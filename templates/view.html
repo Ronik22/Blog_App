@@ -6,6 +6,18 @@
 
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-info alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{msg}}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
     <div class="container">
         <table class="table table-bordered table-hover">
                 <thead>
@@ -14,6 +26,7 @@
                     <th scope="col">Password</th>
                     <th scope="col">Email</th>
                     <th scope="col">Date and Time</th>
+                    <th scope="col"></th>
                 </thead>
                 <tbody>
                     {% for item in values %}
@@ -23,6 +36,7 @@
                             <td>{{item.pwd}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.datetime}}</td>
+                            <td><a class="btn btn-danger" href="/view/delete/{{item._id}}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
