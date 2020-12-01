@@ -121,7 +121,25 @@ def view():
         return render_template("view.html", values = users.query.all())
     else:
         flash("You need administrator privileges to view this page")
+        return redirect(url_for("user"))
+
+
+@app.route('/view/delete/<int:id>')
+def deleteusers(id):
+    if "user" in session and session["user"] == "admin":
+        currentuser = users.query.get_or_404(id)
+        if currentuser.name == "admin":
+            flash("Admin can't be deleted")
+        else:
+            db.session.execute(f"UPDATE blog_post SET author='Unknown' WHERE author='{currentuser.name}';")
+            db.session.delete(currentuser)
+            db.session.commit()
+            flash(f"User deleted from the database and posts (if any) are assigned to 'unknown' author")
+        return redirect(url_for("view"))
+    else:
+        flash("You need administrator privileges to view this page")
         return redirect(url_for("login"))
+
 
 @app.route("/login", methods=["POST","GET"])
 def login():
