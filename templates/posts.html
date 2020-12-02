@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Posts
+<div id="sidenavext">
+    <a href="#">My Posts</a>
+    <a href="#pgindex2">All Posts</a>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -16,6 +19,46 @@ Posts
         {% endfor %}
     {% endif %}
 {% endwith %}
+
+<!-- My Posts Section -->
+
+<div id="pgindex1"></div>
+
+<div style="margin-bottom: 20px; margin-top: 40px;">
+    <h2 style="display: inline;">My Posts :</h2> 
+    <a style="display: inline; width: 120px;" href="/posts/new" class="btn btn-primary float-right" role="button">+ New Post</a>
+</div>
+
+    <hr style="margin-bottom: 40px;">
+    <div>
+    {% set count = [ ] %}
+    {% for post in posts %}
+        {% if post.author == session["user"] %}
+            {% set __ = count.append(1) %}
+            <h3>{{post.title}}</h3>
+            {%if post.author%}
+                <p class="mb-1 text-muted" style="display: inline;">Written By: {{post.author}}</p>
+            {%else%}
+                <p class="mb-1 text-muted" style="display: inline;">Written By: N/A</p>
+            {%endif%}
+            <p class="mb-1 text-muted float-right" style="display: inline;">{{post.date_posted}}</p>
+
+            <br><br>
+            <p style="white-space: pre-wrap; word-wrap: break-word;">{{post.content}}</p>    
+                <a class="btn btn-danger" href="/posts/delete/{{post.id}}">Delete</a>
+                <a class="btn btn-warning" href="/posts/edit/{{post.id}}">Edit</a>
+            <hr>
+        {% endif %}
+    {% endfor %}
+    {% if count|length == 0 %}
+        <h5 style="color: rgb(170, 170, 170); font-weight: 600;">You Haven't posted anything yet.</h5>
+    {% endif %}
+    </div>
+
+
+<!-- All Posts Section -->
+
+<div id="pgindex2" style="height: 55px; margin-top: 20vh;"></div>
 
 <div style="margin-bottom: 20px; margin-top: 40px;">
     <h2 style="display: inline;">All Posts :</h2> 
