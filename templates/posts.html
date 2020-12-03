@@ -9,10 +9,10 @@
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
-        {% for msg in messages %}
-            <div class="alert alert-info alert-dismissible">
+        {% for category,msg in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 {{msg}}
             </div>
