@@ -54,7 +54,7 @@ def posts():
             all_posts = BlogPost.query.order_by(BlogPost.date_posted).all()
             return render_template('posts.html', posts=all_posts)
     else:
-        flash("You are not logged in!")
+        flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
 
 
@@ -67,10 +67,10 @@ def delete(id):
             db.session.commit()
             return redirect('/posts')
         else:
-            flash("Only the author can delete the post")
+            flash("Only the author can delete the post",category='danger')
             return redirect('/posts')
     else:
-        flash("You are not logged in!")
+        flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
 
 
@@ -88,10 +88,10 @@ def edit(id):
             else:
                 return render_template('edit.html',post=post)
         else:
-            flash("Only the author can edit the post")
+            flash("Only the author can edit the post",category='danger')
             return redirect('/posts')
     else:
-        flash("You are not logged in!")
+        flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
 
 @app.route('/posts/new', methods=['GET', 'POST'])
@@ -108,7 +108,7 @@ def new_post():
         else:
             return render_template('new_post.html')
     else:
-        flash("You are not logged in!")
+        flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
 
 @app.route("/")
@@ -120,7 +120,7 @@ def view():
     if  "user" in session and session["user"] == "admin":
         return render_template("view.html", values = users.query.all())
     else:
-        flash("You need administrator privileges to view this page")
+        flash("You need administrator privileges to view this page",category='danger')
         return redirect(url_for("user"))
 
 
@@ -129,15 +129,15 @@ def deleteusers(id):
     if "user" in session and session["user"] == "admin":
         currentuser = users.query.get_or_404(id)
         if currentuser.name == "admin":
-            flash("Admin can't be deleted")
+            flash("Admin can't be deleted",'danger')
         else:
             db.session.execute(f"UPDATE blog_post SET author='Unknown' WHERE author='{currentuser.name}';")
             db.session.delete(currentuser)
             db.session.commit()
-            flash(f"User deleted from the database and posts (if any) are assigned to 'unknown' author")
+            flash(f"User deleted from the database and posts (if any) are assigned to 'unknown' author",category='success')
         return redirect(url_for("view"))
     else:
-        flash("You need administrator privileges to view this page")
+        flash("You need administrator privileges to view this page",category='danger')
         return redirect(url_for("login"))
 
 
@@ -155,17 +155,17 @@ def login():
                 session["pwd"] = found_user.pwd
                 session["email"] = found_user.email
                 session["datetime"] = found_user.datetime
-                flash("Login Successful!")
+                flash("Login Successful!",category='success')
                 return redirect(url_for("user"))
             else:
-                flash("Password is wrong!")
+                flash("Password is wrong!",category='danger')
                 return redirect(url_for("login"))
         else:
-            flash("User Not Found!")
+            flash("User Not Found!",category='danger')
             return redirect(url_for("login"))
     else:
         if "user" in session:
-            flash("Already Logged in!")
+            flash("Already Logged in!",category='info')
             return redirect(url_for("user"))
         return render_template("login.html") 
 
@@ -178,7 +178,7 @@ def register():
 
         found_user = users.query.filter_by(name=user).first()
         if found_user:
-            flash("User already exists")
+            flash("User already exists",category='info')
             return redirect(url_for("register"))
         else:
             session.permanent = True
@@ -187,11 +187,11 @@ def register():
             db.session.add(usr)
             db.session.commit()
 
-            flash("User Registered Successfully!")
+            flash("User Registered Successfully!",category='success')
             return redirect(url_for("user"))
     else:
         if "user" in session:
-            flash("Already Logged in!")
+            flash("Already Logged in!",category='info')
             return redirect(url_for("user"))
         return render_template("register.html") 
 
@@ -212,14 +212,14 @@ def user():
             found_user.email = email
             found_user.datetime = datetime
             db.session.commit()
-            flash("Email and datetime were saved!")
+            flash("Email and datetime were saved!",category='success')
         else:
             if "email" in session and "datetime" in session:
                 email = session["email"]
                 datetime = session["datetime"]
         return render_template("user.html", email=email, name=user, datetime=datetime)
     else:
-        flash("You are not logged in!")
+        flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
 
 @app.route("/logout")
@@ -228,7 +228,7 @@ def logout():
     session.pop("email", None)
     session.pop("datetime", None)
 
-    flash("You have been logged out!","info")
+    flash("You have been logged out!",category="info")
     return redirect(url_for("login"))
 
 if __name__ == "__main__":
