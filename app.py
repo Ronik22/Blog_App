@@ -57,6 +57,14 @@ def posts():
         flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
 
+@app.route('/posts/view/<int:id>')
+def viewpost(id):
+    if "user" in session:
+        post = BlogPost.query.get_or_404(id)
+        return render_template('viewpost.html',post=post)
+    else:
+        flash("You are not logged in!",category='danger')
+        return redirect(url_for("login"))
 
 @app.route('/posts/delete/<int:id>')
 def delete(id):
@@ -233,4 +241,4 @@ def logout():
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
