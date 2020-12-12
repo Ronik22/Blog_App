@@ -17,8 +17,13 @@
           <ul id="rbnav_links">
             <li><a href="/">Home</a></li>
             <li><a href="/view">Users</a></li>
-            <li><a href="/user">Account</a></li>
             <li><a href="/posts">Posts</a></li>
+            {% if "user" in session %}
+                <li><a href="/logout">Logout</a></li>
+                <li><a class="ppsmall" href="/user" ><img style="height: 30px; width: 30px; border-radius: 60px;" src="/static/images/JwyeY6u9_400x400.jpg" alt=""></a></li>
+            {% else %}
+                <li><a href="/login">Login</a></li>
+            {% endif %}
           </ul>
         </nav>
     </div>

@@ -44,7 +44,7 @@
             <p class="mb-1 text-muted float-right" style="display: inline;">{{post.date_posted}}</p>
 
             <br><br>
-            <p style="white-space: pre-wrap; word-wrap: break-word;">{{post.content}}</p>    
+            <p style="white-space: pre-wrap; word-wrap: break-word; height:4.5em; line-height:1.5em; overflow:hidden;">{{post.content}}</p><p><a href="/posts/view/{{post.id}}">[Read-more]</a></p><br>    
                 <a class="btn btn-danger" href="/posts/delete/{{post.id}}">Delete</a>
                 <a class="btn btn-warning" href="/posts/edit/{{post.id}}">Edit</a>
             <hr>
@@ -77,7 +77,7 @@
         <p class="mb-1 text-muted float-right" style="display: inline;">{{post.date_posted}}</p>
 
         <br><br>
-        <p style="white-space: pre-wrap; word-wrap: break-word;">{{post.content}}</p>
+        <p style="white-space: pre-wrap; word-wrap: break-word; height:4.5em; line-height:1.5em; overflow:hidden;">{{post.content}}</p><p><a href="/posts/view/{{post.id}}">[Read-more]</a></p><br>
         {% if post.author == session["user"] or session["user"] == "admin" %}
             <a class="btn btn-danger" href="/posts/delete/{{post.id}}">Delete</a>
             <a class="btn btn-warning" href="/posts/edit/{{post.id}}">Edit</a>
