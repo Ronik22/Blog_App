@@ -87,3 +87,7 @@ html{
     background-color: rgb(171, 25, 255);
     color: #fff;
 }
+
+.ppsmall:hover{
+    border-bottom: none !important;
+}
