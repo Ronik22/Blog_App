@@ -26,6 +26,7 @@
                     <th scope="col">Password</th>
                     <th scope="col">Email</th>
                     <th scope="col">Date and Time</th>
+                    <th scope="col">Image_URL</th>
                     <th scope="col"></th>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                             <td>{{item.pwd}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.datetime}}</td>
+                            <td>{{item.imgurl}}</td>
                             <td><a class="btn btn-danger" href="/view/delete/{{item._id}}">Delete</a></td>
                         </tr>
                     {% endfor %}
