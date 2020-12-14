@@ -4,11 +4,13 @@ from datetime import timedelta, datetime
 from flask_sqlalchemy import SQLAlchemy
 import os
 import bcrypt
+from datetime import datetime
 
-from werkzeug.utils import redirect
+from werkzeug.utils import redirect,secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.jpeg']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(minutes=30)
@@ -21,12 +23,14 @@ class users(db.Model):
     pwd = db.Column(db.String(100))
     email = db.Column(db.String(100), default='N/A')
     datetime = db.Column(db.String(100), default='N/A')
+    imgurl = db.Column(db.String(100), nullable=False, default='static/images/defprof.png')
 
-    def __init__(self, name, email, datetime, pwd):
+    def __init__(self, name, email, datetime, pwd, imgurl):
         self.name = name
         self.email = email
         self.pwd = pwd
         self.datetime = datetime
+        self.imgurl = imgurl
 
 class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -139,6 +143,10 @@ def deleteusers(id):
         if currentuser.name == "admin":
             flash("Admin can't be deleted",'danger')
         else:
+            if currentuser.imgurl=="" or currentuser.imgurl=="static/images/defprof.png":
+                pass
+            else:
+                os.remove('.'+currentuser.imgurl)
             db.session.execute(f"UPDATE blog_post SET author='Unknown' WHERE author='{currentuser.name}';")
             db.session.delete(currentuser)
             db.session.commit()
@@ -191,7 +199,7 @@ def register():
         else:
             session.permanent = True
             session["user"] = user
-            usr = users(user, "", "", pwd)
+            usr = users(user, "", "", pwd, "static/images/defprof.png")
             db.session.add(usr)
             db.session.commit()
 
@@ -209,6 +217,8 @@ def user():
     datetime = None
     if "user" in session:
         user = session["user"]
+        found_user = users.query.filter_by(name=user).first()
+        imgurl = found_user.imgurl
 
         if request.method == "POST":
             email = request.form["email"]
@@ -216,7 +226,6 @@ def user():
 
             session["email"] = email
             session["datetime"] = datetime
-            found_user = users.query.filter_by(name=user).first()
             found_user.email = email
             found_user.datetime = datetime
             db.session.commit()
@@ -225,10 +234,41 @@ def user():
             if "email" in session and "datetime" in session:
                 email = session["email"]
                 datetime = session["datetime"]
-        return render_template("user.html", email=email, name=user, datetime=datetime)
+        return render_template("user.html", email=email, name=user, datetime=datetime, imgurl=imgurl)
     else:
         flash("You are not logged in!",category='danger')
         return redirect(url_for("login"))
+
+
+@app.route('/user/avatar/upload', methods = ['GET', 'POST'])
+def profilepic():
+    if "user" in session:
+        user = session["user"]
+        app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.jpeg']
+        app.config['UPLOAD_FOLDER'] = "static/uploads/profile_pic"
+        if request.method == 'POST':
+            f = request.files['file']
+            f.filename = f"{user}_{datetime.now().isoformat()}.jpg"
+            filename = secure_filename(f.filename)
+            filepath = f"/static/uploads/profile_pic/{filename}"
+
+            found_user = users.query.filter_by(name=user).first()
+            imgurl = found_user.imgurl
+            if imgurl=="" or imgurl=="static/images/defprof.png":
+                pass
+            else:
+                os.remove('.'+imgurl)
+            
+            found_user.imgurl = filepath
+            db.session.commit()
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash("Profile Picture Updated",category='success')
+            return redirect(url_for('user'))   
+    else:
+        flash("You are not logged in!",category='danger')
+        return redirect(url_for("login"))
+
+
 
 @app.route("/logout")
 def logout():
