@@ -14,6 +14,7 @@ html{
     flex-direction: row;
     padding: 0px 1rem;
     height: 55px;
+    /* background-color: rgb(255, 255, 255); */
     background-color: transparent;
     align-items: center;
     flex-wrap: wrap;
