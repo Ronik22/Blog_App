@@ -130,7 +130,7 @@ def deleteusers(id):
         return redirect(url_for("login"))
 
 
-@app.route("/login", methods=["POST","GET"])
+@app.route("/login/", methods=["POST","GET"])
 def login():
     if request.method == "POST":
         user = request.form["nm"]
