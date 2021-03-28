@@ -3,7 +3,7 @@ A simple text Blog using Flask
 
 <br>
 
-## Installation
+Installation
 ------------
 
 
@@ -23,12 +23,12 @@ Note for Microsoft Windows users: replace the virtual environment activation com
 ## Images
 <br>
 <p>
-    <img src="./demo/1.png" alt="1">
-    <img src="./demo/2.png" alt="2">
-    <img src="./demo/3.png" alt="3">
-    <img src="./demo/4.png" alt="4">
-    <img src="./demo/5.png" alt="5">
-    <img src="./demo/6.png" alt="6">
-    <img src="./demo/7.png" alt="7">
-    <img src="./demo/8.png" alt="8">
+    <img style="border:1px solid black;" src="./demo/1.png" alt="1">
+    <img style="border:1px solid black;" src="./demo/2.png" alt="2">
+    <img style="border:1px solid black;" src="./demo/3.png" alt="3">
+    <img style="border:1px solid black;" src="./demo/4.png" alt="4">
+    <img style="border:1px solid black;" src="./demo/5.png" alt="5">
+    <img style="border:1px solid black;" src="./demo/6.png" alt="6">
+    <img style="border:1px solid black;" src="./demo/7.png" alt="7">
+    <img style="border:1px solid black;" src="./demo/8.png" alt="8">
 </p>
