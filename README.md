@@ -29,6 +29,5 @@ Note for Microsoft Windows users: replace the virtual environment activation com
     <img style="border:1px solid black;" src="./demo/4.jpg" alt="4">
     <img style="border:1px solid black;" src="./demo/5.jpg" alt="5">
     <img style="border:1px solid black;" src="./demo/6.jpg" alt="6">
-    <img style="border:1px solid black;" src="./demo/7.jpg" alt="7">
     <img style="border:1px solid black;" src="./demo/8.jpg" alt="8">
 </p>
