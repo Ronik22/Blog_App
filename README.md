@@ -30,3 +30,13 @@ Note for Microsoft Windows users: replace the virtual environment activation com
     <img style="border:1px solid black;" src="./demo/5.jpg" alt="5">
     <img style="border:1px solid black;" src="./demo/6.jpg" alt="6">
 </p>
+
+## Demo
+
+<!-- blank line -->
+<figure class="video_container">
+    <video controls="true" allowfullscreen="true">
+        <source src="./demo/demo.mp4" type="video/mp4">
+    </video>
+</figure>
+<!-- blank line -->

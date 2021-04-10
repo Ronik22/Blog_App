@@ -67,6 +67,7 @@ html{
 
 .btn{
     width: 80px;
+    border-radius:0;
 }
 
 #sidenavext{

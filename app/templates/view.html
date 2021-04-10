@@ -18,15 +18,15 @@
 {% endwith %}
 
 
-    <div class="container">
+    <div class="container" style="overflow-x: auto;">
         <table class="table table-bordered table-hover">
                 <thead>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Password</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Date and Time</th>
-                    <th scope="col">Image_URL</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Image</th>
                     <th scope="col"></th>
                 </thead>
                 <tbody>
@@ -37,7 +37,7 @@
                             <td>{{item.pwd}}</td>
                             <td>{{item.email}}</td>
                             <td>{{item.datetime}}</td>
-                            <td>{{item.imgurl}}</td>
+                            <td><img style="display:inline; transform: translateY(-9px); height: 80px; width: 80px; border-radius: 60px;" src="{{item.imgurl[4:]}}" alt="image"></td>
                             <td><a class="btn btn-danger" href="/view/delete/{{item._id}}">Delete</a></td>
                         </tr>
                     {% endfor %}

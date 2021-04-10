@@ -251,6 +251,3 @@ def logout():
 
     flash("You have been logged out!",category="info")
     return redirect(url_for("login"))
-
-
-# <a class="ppsmall" href="/user" ><img style="height: 30px; width: 30px; border-radius: 60px;" src="{{imgurl}}" alt=""></a>
