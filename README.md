@@ -20,23 +20,6 @@ Note for Microsoft Windows users: replace the virtual environment activation com
 
 <br>
 
-## Images
-<br>
-<p>
-    <img style="border:1px solid black;" src="./demo/1.jpg" alt="1">
-    <img style="border:1px solid black;" src="./demo/2.jpg" alt="2">
-    <img style="border:1px solid black;" src="./demo/3.jpg" alt="3">
-    <img style="border:1px solid black;" src="./demo/4.jpg" alt="4">
-    <img style="border:1px solid black;" src="./demo/5.jpg" alt="5">
-    <img style="border:1px solid black;" src="./demo/6.jpg" alt="6">
-</p>
-
 ## Demo
 
-<!-- blank line -->
-<figure class="video_container">
-    <video controls="true" allowfullscreen="true">
-        <source src="./demo/demo.mp4" type="video/mp4">
-    </video>
-</figure>
-<!-- blank line -->
+![demo](./demo/demo.gif)
